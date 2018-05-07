@@ -5,15 +5,32 @@ const resolvers = {
     songs() {
       return Song.findAll();
     },
+    song(parent, {id}) {
+      return Song.findById({_id: id});
+    },
+    lyrics() {
+      return Lyric.findAll();
+    },
+    lyric(parent, {id}) {
+      return Lyric.findById({_id: id});
+    },
+
 
   },
   Mutation: {
-    addSong: async (parent, args) => {
-      return await new Song(args).save();
+    addSong(parent, {title}) {
+      return new Song({title}).save();
     },
-    deleteSong: async (parent, args) => {
-      return await Song.remove({_id:args.id});
+    deleteSong(parent, args) {
+      return Song.remove({_id: args.id});
     },
+    addLyricToSong(parent, {content, songId}) {
+      return Song.addLyric(songId, content);
+    },
+    likeLyric(parent, {id}) {
+      return Lyric.like(id);
+    },
+
     // createTalk: async (parent, args, { Song }) => {
     //     const talk = await new Song(args).save()
     //     talk._id = talk._id.toString()

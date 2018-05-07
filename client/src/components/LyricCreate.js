@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 
 class LyricCreate extends Component {
   constructor(props) {
@@ -11,46 +11,44 @@ class LyricCreate extends Component {
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-
-    this.props.mutate({
-      variables: {
-        content: this.state.content,
-        songId: this.props.songId
-      }
-    })
-      .then(() => {
-
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    this.setState({content: ''});
-  }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <label>
-            Add Lyrics:
-          </label>
-          <input
-            type='text'
-            name='title'
-            value={this.state.content}
-            onChange={event => {this.setState({content: event.target.value})}}
-          />
-        </form>
-      </div>
+      <Mutation mutation={AddLyricToSong}>
+        {(addLyricToSong) => (
+          <div>
+            <form onSubmit={e => {
+              e.preventDefault();
+              addLyricToSong({
+                variables: {
+                  content: this.state.content,
+                  songId: this.props.songId
+                }
+              });
+              this.setState({content: ""});
+            }}>
+              <label>
+                Add Lyrics:
+              </label>
+              <input
+                type='text'
+                name='title'
+                value={this.state.content}
+                onChange={event => {
+                  this.setState({content: event.target.value})
+                }}
+              />
+            </form>
+          </div>
+        )}
+      </Mutation>
     )
   }
 }
 
-const mutation = gql`
-mutation AddLyricToSong($content: String, $songId: ID){
-  addLyricToSong(content: $content, songId:$songId){
+const AddLyricToSong = gql`
+mutation AddLyricToSong($content: String!, $songId: ID!){
+  addLyricToSong(content: $content, songId: $songId){
      id
      lyrics {
       id
@@ -59,4 +57,4 @@ mutation AddLyricToSong($content: String, $songId: ID){
      }
   }
 }`;
-export default graphql(mutation)(LyricCreate);
+export default LyricCreate;

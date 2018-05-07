@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import { graphql } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 
 import likeLyric from '../queries/likeLyric';
 
+
 class LyricList extends Component {
-  onLikeClick(id, likes){
+  onLikeClick(id, likes) {
     this.props.mutate({
       variables: {
         id
@@ -15,25 +16,41 @@ class LyricList extends Component {
         likeLyrics: {
           id,
           __typename: 'LyricType',
-          likes : ++likes
+          likes: ++likes
         }
       }
     })
-      .then(()=>{
-      console.log(this.props.lyrics);
-    })
-  .catch(err=>{
-      console.log(err);
-    });
+      .then(() => {
+        console.log(this.props.lyrics);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   renderLyrics() {
+    console.log(this.props.lyrics);
     if (this.props.lyrics) {
       return this.props.lyrics.map(({content, id, likes}) => (
+
         <li className='collection-item' key={id}>
           {content}
           <div className="vote-box right">
-            <i className='material-icons right' onClick={()=>this.onLikeClick(id, likes)}>thumb_up</i>
+            <Mutation
+              mutation={likeLyric} key={id}
+              // update={(cache, {data: {likeLyric}}) => {
+              //   const {songs} = cache.readQuery({query: GET_SONGS});
+              //   cache.writeQuery({
+              //     query: GET_SONGS,
+              //     data: {songs: songs.filter(song => (song.id !== id))}
+              //   });
+              // }}
+            >
+              {(likeLyric) => (
+                <i className='material-icons right'
+                   onClick={() => likeLyric({variables: {id, likes: ++likes}})}>thumb_up</i>
+              )}
+            </Mutation>
             <span className="">{likes}</span>
           </div>
         </li>
@@ -42,6 +59,7 @@ class LyricList extends Component {
   }
 
   render() {
+
     return (
       <ul className='collection'>
         {this.renderLyrics()}
@@ -51,4 +69,4 @@ class LyricList extends Component {
 }
 
 
-export default graphql(likeLyric)(LyricList);
+export default LyricList;

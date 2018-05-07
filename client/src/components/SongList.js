@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-// import { graphql } from 'react-apollo';
-//
-// import query from '../queries/fetchSongs';
+
 import DELETE_SONG from '../queries/deleteSong';
 
 import gql from "graphql-tag";
@@ -17,44 +15,6 @@ const GET_SONGS = gql`
 }
 `;
 
-// class SongList extends Component {
-//
-//   deleteSong(id) {
-//     this.props.mutate({
-//       variables: {
-//         id: id
-//       }
-//     }).then(()=>this.props.data.refetch());
-//   }
-//
-//
-//   renderSongs() {
-//     if (this.props.data && this.props.data.songs) {
-//       return this.props.data.songs.map(({title, id}) => (
-//         <li className='collection-item' key={id}>
-//           <Link to={`/songs/${id}`}>{title}</Link>
-//             <i className='material-icons right' onClick={() => this.deleteSong(id)}>delete</i>
-//         </li>
-//       ));
-//     }
-//   }
-//
-//
-//   render() {
-//     if (this.props.loading) {
-//       return <div>Loading</div>
-//     }
-//     return (
-//       <div>
-//         <ul className='collection'>{this.renderSongs()}</ul>
-//         <Link to='/songs/new'
-//               className='btn-floating btn-large red right'>
-//           <i className='material-icons'>add</i>
-//         </Link>
-//       </div>
-//     )
-//   }
-// }
 
 
 const renderSongs = (data) => {
@@ -83,7 +43,7 @@ const renderSongs = (data) => {
   }
 }
 
-const SongList = ({onDogSelected}) => (
+const SongList = () => (
   <Query query={GET_SONGS}>
     {({loading, error, data}) => {
       if (loading) return "Loading...";

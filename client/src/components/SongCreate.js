@@ -15,7 +15,6 @@ class SongCreate extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Mutation
         mutation={ADD_SONG}
@@ -25,6 +24,7 @@ class SongCreate extends Component {
             query: GET_SONGS,
             data: {songs: songs.concat([addSong])}
           });
+          this.props.history.push('/')
         }}
       >
         {(addSong) => (
@@ -36,7 +36,6 @@ class SongCreate extends Component {
                 e.preventDefault();
                 addSong({variables: {title: this.state.title}});
                 this.setState({value: ""});
-                this.props.history.push('/')
               }
             }>
               <label>

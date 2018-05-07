@@ -4,20 +4,22 @@ import resolvers from './resolvers';
 
 const typeDefs = `
 type Query {
-  song(title: String): Song  
+  song(id: ID): Song  
   songs: [Song]
+  lyric(id: ID): Lyric  
+  lyrics: [Lyric]
 } 
  
 type Song {
-  id: String
+  id: ID
   title: String
   lyrics: [Lyric] 
 }
 
 type Lyric{
-  id: String
-   likes: Int,
-   content: String
+  id: ID
+  likes: Int,
+  content: String
 }
    
 type Mutation {
@@ -28,6 +30,15 @@ type Mutation {
     deleteSong (
        id: ID
     ): Song
+    
+    addLyricToSong(
+      content: String!,
+      songId: ID!
+    ): Song!
+  
+    likeLyric(
+      id: ID
+    ): Lyric!
 }
 `;
 

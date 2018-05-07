@@ -85,7 +85,7 @@ graphQLServer.use(
     graphqlExpress({
         schema,
         // This option turns on tracing
-        tracing: true
+        //tracing: true
     })
 );
 graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
