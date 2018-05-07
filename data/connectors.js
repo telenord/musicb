@@ -1,8 +1,8 @@
-import Mongoose from 'Mongoose';
+import Mongoose from 'mongoose';
 
 const Schema = Mongoose.Schema;
 Mongoose.Promise = global.Promise;
-const mongo = Mongoose.connect('mongodb://localhost/lyrics');
+const mongo = Mongoose.connect('mongodb://localhost:27017/lyrics');
 
 
 const LyricSchema = new Schema({

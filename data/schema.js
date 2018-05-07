@@ -1,7 +1,4 @@
-import {
-    makeExecutableSchema,
-    addMockFunctionsToSchema,
-} from 'graphql-tools';
+import { makeExecutableSchema } from 'graphql-tools';
 
 import resolvers from './resolvers';
 
@@ -9,24 +6,31 @@ const typeDefs = `
 type Query {
   song(title: String): Song  
   songs: [Song]
-}  
+} 
+ 
 type Song {
   id: String
   title: String
   lyrics: [Lyric] 
 }
+
 type Lyric{
   id: String
    likes: Int,
    content: String
-}   
-  type Mutation {
+}
+   
+type Mutation {
     addSong (
        title: String!
+    ): Song!
+    
+    deleteSong (
+       id: ID
     ): Song
-  }
+}
 `;
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({typeDefs, resolvers});
 
 export default schema;

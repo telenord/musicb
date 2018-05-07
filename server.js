@@ -67,9 +67,15 @@ import cors from 'cors';
 import schema from './data/schema';
 const env = require('dotenv').config();
 
-const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 4001;
+const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 4000;
 
 const graphQLServer = express();
+
+// const corsOptions = {
+//     origin: 'http://localhost:3005',
+//     credentials: true // <-- REQUIRED backend setting
+// };
+
 graphQLServer.use(cors());
 graphQLServer.use(compression());
 
@@ -82,7 +88,9 @@ graphQLServer.use(
         tracing: true
     })
 );
-graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphiql' }));
+graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+
+
 
 graphQLServer.listen(GRAPHQL_PORT, () =>
     console.log(
@@ -92,3 +100,4 @@ graphQLServer.listen(GRAPHQL_PORT, () =>
 
 // https://dev-blog.apollodata.com/tutorial-building-a-graphql-server-cddaa023c035?_ga=2.135700918.62640134.1525599074-942791465.1525599074
 // https://github.com/SaraVieira/graphql-simple-server-tutorial/blob/master/index.js
+// https://github.com/apollographql/GitHunt-API/blob/master/api/server.js
