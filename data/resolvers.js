@@ -6,17 +6,16 @@ const resolvers = {
       return Song.findAll();
     },
     song(parent, {id}) {
-      return Song.findById({_id: id});
+      return Song.findById({_id: id}).populate('lyrics');
     },
-    lyrics() {
-      return Lyric.findAll();
+    lyrics(parent, {songId}) {
+        return Lyric.findAll(songId);
     },
     lyric(parent, {id}) {
-      return Lyric.findById({_id: id});
+      return Lyric.findById({_iid: id});
     },
-
-
   },
+
   Mutation: {
     addSong(parent, {title}) {
       return new Song({title}).save();
@@ -30,14 +29,7 @@ const resolvers = {
     likeLyric(parent, {id}) {
       return Lyric.like(id);
     },
-
-    // createTalk: async (parent, args, { Song }) => {
-    //     const talk = await new Song(args).save()
-    //     talk._id = talk._id.toString()
-    //     return talk
-    // },
   },
-
 };
 
 export default resolvers;

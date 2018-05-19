@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools';
+import {makeExecutableSchema} from 'graphql-tools';
 
 import resolvers from './resolvers';
 
@@ -7,7 +7,7 @@ type Query {
   song(id: ID): Song  
   songs: [Song]
   lyric(id: ID): Lyric  
-  lyrics: [Lyric]
+  lyrics(songId: ID): [Lyric]
 } 
  
 type Song {
@@ -18,8 +18,8 @@ type Song {
 
 type Lyric{
   id: ID
-  likes: Int,
   content: String
+   likes: Int
 }
    
 type Mutation {
@@ -34,7 +34,7 @@ type Mutation {
     addLyricToSong(
       content: String!,
       songId: ID!
-    ): Song!
+    ): Song
   
     likeLyric(
       id: ID

@@ -24,8 +24,12 @@ const client = new ApolloClient({
 
      //link: new HttpLink({ uri: 'http://localhost:4000/graphql', credentials: 'same-origin' } ),
     link,
-    cache: new InMemoryCache(),
-    dataIdFromObject: o => o.id
+    cache: new InMemoryCache({
+        dataIdFromObject: o => {
+           return  o.id
+        }
+    }),
+
 });
 //import configureStore from './store/store';
 

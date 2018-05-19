@@ -9,13 +9,11 @@ import GET_SONG from '../queries/fetchSong';
 
 const SongDetail = ({match:{params}}) => (
   <Query query={GET_SONG} variables={{id: params.id}}>
-    {({loading, error, data}) => {
+    {({loading, error, data:{song}}) => {
       if (loading) return null;
       if (error) return `Error!: ${error}`;
-      console.log(data);
-      if (data.song) {
-        const {id, title, lyrics} = data.song;
-        console.log(lyrics);
+      if (song) {
+        const {id, title, lyrics} = song;
         return (
           <div>
             <Link to='/'>Back</Link>

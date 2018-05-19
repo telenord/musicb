@@ -67,7 +67,7 @@ import cors from 'cors';
 import schema from './data/schema';
 const env = require('dotenv').config();
 
-const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 4000;
+const GRAPHQL_PORT = process.env.GRAPHQL_PORT || 4001;
 
 const graphQLServer = express();
 
@@ -89,8 +89,6 @@ graphQLServer.use(
     })
 );
 graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-
-
 
 graphQLServer.listen(GRAPHQL_PORT, () =>
     console.log(
